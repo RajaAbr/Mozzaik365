@@ -1,0 +1,26 @@
+import { useState, useEffect } from 'react';
+
+const useDimensions = (ref) => {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Use ref width and height to set dimensions
+      if (ref.current) {
+        const { width, height } = ref.current.getBoundingClientRect();
+        setDimensions({ width, height });
+      }
+    };
+
+    handleResize();
+
+    // Adding event listener for resize
+    window.addEventListener('resize', handleResize);
+    // Remove Event Listner on Unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, [ref]);
+
+  return dimensions;
+};
+
+export default useDimensions;

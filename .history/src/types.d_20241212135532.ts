@@ -1,0 +1,59 @@
+/********* Login *******/
+
+export type LoginResponse = {
+  jwt: string
+}
+
+/********* User *******/
+export type GetUserByIdResponse = {
+  id: string;
+  username: string;
+  pictureUrl: string;
+}
+
+/********* Memes *******/
+export type Meme = {
+  id: string;
+  authorId: string;
+  pictureUrl: string;
+  description: string;
+  commentsCount: string;
+  texts: {
+    content: string;
+    x: number;
+    y: number;
+  }[];
+  createdAt: string;
+};
+
+
+export type MemeWithAuthorAndComments = Meme & {
+  author: GetUserByIdResponse,
+  comments: MemeComment[],
+}
+
+
+export type GetMemesResponse = {
+  total: number;
+  pageSize: number;
+  results: Meme[];
+}
+
+/********* MemesComment *******/
+export type GetMemeCommentResponse = {
+  id: string;
+  authorId: string;
+  memeId: string;
+  content: string;
+  createdAt: string;
+}
+
+export type GetMemeCommentsResponse = {
+  total: number;
+  pageSize: number;
+  results: GetMemeCommentResponse[]
+}
+
+export type MemeComment = GetMemeCommentResponse & {
+  author: GetUserByIdResponse;
+}
